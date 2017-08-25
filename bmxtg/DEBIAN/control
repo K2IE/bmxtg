@@ -1,0 +1,7 @@
+Package: bmxtg
+Version: 1.3
+Section: hamradio
+Priority: extra
+Maintainer: Dan Srebnick <k2dls at k2dls.net>
+Architecture: all
+Description: Brandmeister XTG Dialer for DV4mini

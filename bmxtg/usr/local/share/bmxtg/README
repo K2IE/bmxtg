@@ -10,9 +10,8 @@ rights.
 
 CONFIGURATION
 
-The following files must be stored in the same directory:
+The following configuration files must be stored in /etc/bmxtg:
 
-	bmxtg.py
 	talkgroups.conf
 	masters.conf
 	buttons.conf
