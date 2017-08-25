@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=bmxtg
+Type=Application
+Version=1.3
+Comment=BM XTG Dialer
+Exec=bmxtg.py
+Terminal=false
+Icon=/usr/local/share/icons/bm.jpg
+Categories=Network;HamRadio

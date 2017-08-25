@@ -8,6 +8,12 @@ works using a licensed work, under the same license. Copyright and license
 notices must be preserved. Contributors provide an express grant of patent
 rights.
 
+INSTALLATION
+
+Install the .deb package:
+
+https://github.com/K2DLS/bmxtg/raw/master/packages/bmxtg-1.3.deb
+
 CONFIGURATION
 
 The following configuration files must be stored in /etc/bmxtg:
