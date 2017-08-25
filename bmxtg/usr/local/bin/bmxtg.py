@@ -2,8 +2,13 @@
 
 ## Author:  Dan Srebnick, K2DLS
 ##
+## Version: 1.3
+## Release: August 25, 2017
+##
+## Conf files moved to /etc/bmxtg
+##
 ## Version: 1.2
-## Release: April 20, 2017
+## Release: April 19, 2017
 ##
 ## Modified to dynamically load list of BM masters and talkgroups
 ##
@@ -18,7 +23,6 @@
 ## Licensed under the Creative Commons Attribution + Noncommercial 3.0 License.
 ## Attribution Required / Noncommercial use permitted
 ##
-
 import gtk
 import requests
 import json
@@ -30,15 +34,14 @@ import os.path
 config = ConfigParser.ConfigParser()
 
 try:
-    os.path.isfile("masters.conf")
+    os.path.isfile("/etc/bmxtg/masters.conf")
 except:
     exit("\nError: masters.conf not found\n")
 else:
-    config.read('masters.conf')
+    config.read('/etc/bmxtg/masters.conf')
 
 bm_num = config.get('My Master', 'bm_master')
 
-## Server list
 url = "http://registry.dstar.su/api/node.php"
 
 try:
@@ -46,8 +49,7 @@ try:
 except:
    exit("\nError: Can't reach BM masters list\n")
 
-code = str(r.status_code)
-if (code == "200"):
+if (r.status_code == 200):
       data = json.loads(r.text)
 
       j = 0
@@ -60,7 +62,7 @@ if (code == "200"):
       if bm_master == "notfound":
          exit("\nError: Can't find address for master " + bm_num + "\n")
 else:
-   exit("\nError: Status code " + code + " while loading BM masters\n")
+   exit("\nError: Problem loading BM masters\n")
 
 def press(widget):
    num = entry.get_text()
@@ -100,8 +102,7 @@ def bm_api(group):
 #   debug_api(url,r)
 
    entry.set_text('')
-   code = str(r.status_code)
-   if (code == "200"):
+   if (r.status_code == 200):
       data = json.loads(r.text)
 
       if data:
@@ -112,6 +113,7 @@ def bm_api(group):
          message = " Check BM master"
 
    else:
+      code = str(r.status_code)
       message = " Failure: " + code
 
    statusbar.push(context_id,message)
@@ -133,7 +135,7 @@ def debug_api(url,r):
 win1 = gtk.Window()
 win1.connect('destroy', lambda w: gtk.main_quit())
 win1.set_default_size(250,250)
-win1.set_title('BM XTG Dialer v1.2')
+win1.set_title('BM XTG Dialer v1.3')
 
 box = gtk.VBox()
 win1.add(box)
@@ -190,18 +192,17 @@ try:
 except:
    exit("\nError: Can't reach BM groups list\n")
 
-code = str(r.status_code)
-if (code == "200"):
+if (r.status_code == 200):
       data = json.loads(r.text)
       for tgid in data:
          tglabel = data[tgid]
          grouplabel[tglabel] = tgid
 else:
-   exit("\nError: Status code " + code + " while loading BM talkgroups\n")
+   exit("\nError: Problem loading BM groups list\n")      
 
 ## talkgroups.conf overrides BM group list when needed
 try:
-   with open('talkgroups.conf','r') as f:
+   with open('/etc/bmxtg/talkgroups.conf','r') as f:
       for line in f:
          if (not line.startswith("#") and line[0].isdigit()):
             line = line.rstrip()
@@ -217,7 +218,7 @@ mempad = gtk.Table(2,2, gtk.TRUE)
 
 # load button names
 try:
-   with open('buttons.conf','r') as f:
+   with open('/etc/bmxtg/buttons.conf','r') as f:
       mem = f.read().splitlines()
 except:
     exit("\nError: buttons.conf not found\n")
