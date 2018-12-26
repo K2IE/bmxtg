@@ -36,7 +36,8 @@ for the [My Master] section at the top of the file.  The bm_master option
 should be set to the number of the master that your dv4mini client software
 connects to.  As of version 1.2, masters.conf no longer contains the list of
 all Brandmeister master servers.  This is downloaded dynamically when bmxtg.py
-is started.
+is started.  As of December 2018, the USA master servers no longer work with
+the DV4mini.  Choose a bm_master that is not located in the USA.
 
 There are 12 memory buttons.  Place the names of the memories you want to use
 in the buttons.conf file.  The name that you use in the buttons.conf file
